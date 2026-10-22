@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-theme="cosmic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#11152a" />
+  <meta name="description" content="WorldTime AI — world clocks, timezone conversion, and a conversational AI assistant." />
+  <title>WorldTime AI — Your World, Your Time</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="logo/earth-hour.png">
+</head>
+<body data-theme="cosmic">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="WorldTime AI home">
+      <span class="brand-mark" aria-hidden="true">◷</span>
+      <span class="brand-copy"><strong>WorldTime <span>AI</span></strong><small>Your world, your time.</small></span>
+    </a>
+    <nav class="top-actions" aria-label="Main navigation">
+      <a href="#clocks">World Clocks</a>
+      <a href="#converter">Converter</a>
+      <a href="#assistant">AI Assistant</a>
+    </nav>
+    <div class="theme-switcher" role="group" aria-label="Choose website theme">
+      <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme"><span aria-hidden="true">☀</span><span class="theme-label">Light</span></button>
+      <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme"><span aria-hidden="true">☾</span><span class="theme-label">Dark</span></button>
+      <button type="button" data-theme-choice="cosmic" aria-pressed="true" title="Cosmic theme"><span aria-hidden="true">✦</span><span class="theme-label">Cosmic</span></button>
+    </div>
+  </header>
+
+  <main id="home" class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot"></span> GLOBAL TIME, MADE SIMPLE</p>
+        <h1>One world.<br /><span>Every time zone.</span></h1>
+        <p class="hero-description">Keep track of time around the world, convert time zones in seconds, and ask your AI assistant anything — not just about time.</p>
+        <div class="hero-pills"><span>🌍 World clocks</span><span>↔ Time converter</span><span>✦ AI assistant</span></div>
+      </div>
+      <aside class="local-time-card" aria-label="Your local time">
+        <div class="local-card-top"><span class="small-label">YOUR LOCAL TIME</span><span class="live-chip"><span class="live-dot"></span> LIVE</span></div>
+        <div class="local-time" id="localTime">--:--:--</div>
+        <div class="local-date" id="localDate">Loading local date…</div>
+        <div class="local-zone-row"><span class="zone-icon">⌖</span><span id="localZone">Detecting your time zone…</span></div>
+      </aside>
+    </section>
+
+    <section class="section-block" id="clocks" aria-labelledby="clocksTitle">
+      <div class="section-heading">
+        <div><p class="section-kicker">01 / THE WORLD, RIGHT NOW</p><h2 id="clocksTitle">World clocks</h2><p class="section-subtitle">A little window into time across the globe.</p></div>
+        <div class="add-city-control"><label class="visually-hidden" for="citySearch">Search for a city</label><input id="citySearch" list="cityOptions" placeholder="Search city or country…" autocomplete="off" /><datalist id="cityOptions"></datalist><button class="button button-primary" id="addCityBtn" type="button">＋ Add city</button></div>
+      </div>
+      <p class="inline-message" id="cityMessage" role="status" aria-live="polite"></p>
+      <div class="clock-grid" id="clockGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section-block converter-section" id="converter" aria-labelledby="converterTitle">
+      <div class="section-heading"><div><p class="section-kicker">02 / MAKE THE TIME TRAVEL</p><h2 id="converterTitle">Time zone converter</h2><p class="section-subtitle">Choose a time in one city and see what it is in another.</p></div><span class="converter-badge">UTC-aware conversion</span></div>
+      <form class="converter-card" id="converterForm">
+        <div class="converter-field"><label for="fromCity">From</label><select id="fromCity" name="fromCity"></select><label class="datetime-label" for="sourceDateTime">Date and time</label><input id="sourceDateTime" type="datetime-local" required /></div>
+        <div class="swap-column"><span class="swap-arrow" aria-hidden="true">→</span><span class="swap-caption">CONVERT</span></div>
+        <div class="converter-field"><label for="toCity">To</label><select id="toCity" name="toCity"></select><div class="result-panel" id="conversionResult" aria-live="polite"><span class="result-label">CONVERTED TIME</span><strong>Choose cities and a time</strong><small>The result will appear here.</small></div></div>
+        <div class="converter-actions"><button class="button button-primary" type="submit">Convert time <span aria-hidden="true">↗</span></button><button class="button button-quiet" type="button" id="swapCitiesBtn">Swap cities</button></div>
+      </form>
+    </section>
+
+    <section class="section-block assistant-section" id="assistant" aria-labelledby="assistantTitle">
+      <div class="section-heading"><div><p class="section-kicker">03 / YOUR HELPFUL COMPANION</p><h2 id="assistantTitle">AI assistant</h2><p class="section-subtitle">Ask about time zones, coding, learning, technology, or everyday questions.</p></div><div class="ai-status" id="aiStatus"><span class="status-dot"></span><span>Checking AI connection…</span></div></div>
+      <div class="chat-layout">
+        <aside class="chat-sidebar">
+          <button class="button button-primary new-chat-btn" type="button" id="newChatBtn"><span aria-hidden="true">＋</span> New chat</button>
+          <div class="history-heading"><span>YOUR CHATS</span><span class="history-count" id="historyCount">0</span></div>
+          <div class="chat-history" id="chatHistory" aria-label="Saved conversations"></div>
+          <div class="sidebar-note"><span aria-hidden="true">🔒</span><p>Chat history is stored in this browser on this device.</p></div>
+        </aside>
+        <div class="chat-main">
+          <div class="chat-topline"><div class="chat-title-wrap"><span class="assistant-avatar" aria-hidden="true">✦</span><div><strong id="currentChatTitle">New conversation</strong><small>WorldTime AI Assistant</small></div></div><button type="button" class="button button-quiet reset-chat-btn" id="resetChatBtn" title="Clear messages in this conversation">↻ <span>Reset chat</span></button></div>
+          <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions text">
+            <div class="welcome-chat" id="chatWelcome"><div class="welcome-orb">✦</div><h3>What can I help you with?</h3><p>Ask me about world time, or start a completely different conversation.</p><div class="suggestion-list"><button type="button" class="suggestion">What time is it in Tokyo?</button><button type="button" class="suggestion">Help me learn JavaScript</button><button type="button" class="suggestion">What can you help me with?</button></div></div>
+          </div>
+          <form class="chat-composer" id="chatForm"><label for="chatInput" class="visually-hidden">Message WorldTime AI</label><textarea id="chatInput" rows="1" maxlength="5000" placeholder="Message WorldTime AI…" required></textarea><button type="submit" class="send-button" id="sendButton" aria-label="Send message" title="Send message">↑</button><div class="composer-footnote">AI can make mistakes. Check important information.</div></form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-main"><span>© <span id="footerYear">2026</span> <strong>WorldTime AI</strong></span><span>Designed &amp; Developed by <strong>MystrioCraft Studio</strong></span></div><div class="footer-tagline">Built for curious minds across every time zone.</div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
